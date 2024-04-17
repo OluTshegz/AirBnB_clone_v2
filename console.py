@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+from ast import literal_eval
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -115,13 +116,16 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
-            print("** class name missing **")
+        if not self.checker(args, ['n', 'ec']):
             return
-        elif args not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        new_instance = HBNBCommand.classes[args]()
+        # if not args:
+        #     print("** class name missing **")
+        #     return
+        # elif args not in HBNBCommand.classes:
+        #     print("** class doesn't exist **")
+        #     return
+        cls, var, val = self.parse_command(args)
+        new_instance = HBNBCommand.classes[cls](**{var: val})
         storage.save()
         print(new_instance.id)
         storage.save()
@@ -319,6 +323,55 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
+    @staticmethod
+    def parse_command(line):
+        """parse the command entered by the user"""
+        parts = line.split('.')
+        equal_parts = line.split()
+        if len(parts) == 2 and parts[1].endswith(')'):
+            cls = parts[0]
+            parts = parts[1].split("(")
+            if len(parts) == 2:
+                method = parts[0]
+                parts = parts[1].rstrip(")")
+                if not parts:
+                    return cls, method
+                if "{" not in parts:
+                    args = [literal_eval(i.strip())
+                            for i in parts.split(",")]
+                else:
+                    args = [literal_eval(i.strip())
+                            for i in parts.split(",", 1)]
+                return cls, method, args
+            return cls, parts[0]
+        else:
+            return None
+
+    @staticmethod
+    def checker(model, keys):
+        """checks if the model string contains any of the specified keys"""
+
+        part = model.split()
+        if "n" in keys and not model:
+            print("** class name missing **")
+            return False
+        if "l" in keys and len(model.split()) < 2:
+            print("** instance id missing **")
+            return False
+        if "ec" in keys and part[0] not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return False
+        if "es" in keys and ".".join(part[0:2]) not in storage.all():
+            print("** no instance found **")
+            return False
+        if "a" in keys and len(model.split()) < 3:
+            print("** attribute name missing **")
+            return
+        if "v" in keys and len(model.split()) < 4:
+            print("** value missing **")
+            return
+        return True
 
 
 if __name__ == "__main__":

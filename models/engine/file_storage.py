@@ -12,6 +12,15 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
         return FileStorage.__objects
 
+    def get_all(self, key=None):
+        """get all objects from the storage optionally filtered by the key"""
+        if not key:
+            return [str(i) for i in self.all().values()]
+        return list(filter(
+            lambda gotten_search: key in str(gotten_search),
+            self.all().values()
+        ))
+
     def new(self, obj):
         """Adds new object to storage dictionary"""
         self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
