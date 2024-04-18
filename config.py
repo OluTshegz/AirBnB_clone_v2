@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+"""Module Script for Configuring Environment Variables"""
 from os import environ
 
 HBNB_ENV = environ.get("HBNB_ENV")
