@@ -20,7 +20,7 @@ $config_nginx="server {
 }"
 
 package { 'nginx':
-  ensure => 'present',
+  ensure   => 'present',
   provider => 'apt',
 }
 
