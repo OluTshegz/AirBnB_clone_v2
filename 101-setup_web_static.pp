@@ -55,7 +55,7 @@ package { 'nginx':
   target => '/data/web_static/releases/test',
 }
 
--> exec { 'chown -R ubuntu:ubuntu /data/':
+-> exec { 'chown -R root:root /data/':
   path => '/usr/bin/:/usr/local/bin/:/bin/',
 }
 
