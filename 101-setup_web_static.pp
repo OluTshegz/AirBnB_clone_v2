@@ -79,7 +79,7 @@ file { '/var/www':
 
 -> file { '/etc/nginx/sites-available/default':
   ensure  => 'present',
-  content => $nginx_conf,
+  content => $config_nginx,
 }
 
 -> exec { 'nginx restart':
