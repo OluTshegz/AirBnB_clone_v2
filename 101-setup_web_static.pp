@@ -8,6 +8,7 @@ $config_nginx="server {
     index index.html index.htm index.nginx-debian.html;
     location /hbnb_static {
         alias /data/web_static/current/;
+        index index.html index.htm index.nginx-debian.html;
     }
     location /redirect_me {
         return 301 https://github.com/OluTshegz;
