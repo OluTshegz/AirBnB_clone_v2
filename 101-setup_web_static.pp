@@ -84,4 +84,3 @@ file { '/var/www':
 -> exec { 'nginx restart':
   path => '/etc/init.d/',
 }
-
