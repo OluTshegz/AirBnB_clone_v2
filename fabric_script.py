@@ -6,7 +6,7 @@ from fabric import Connection
 with Connection(host='52.91.126.218',
                 user='ubuntu',
                 connect_kwargs={
-                    'key_filepath': '/home/olusegun/.ssh/school'}) as c:
+                    'key_filenamepath': '/home/olusegun/.ssh/school'}) as c:
     c.run('sudo apt-get -y update')
     c.run('sudo apt-get -y upgrade')
     c.run('sudo apt-get -y install nginx')
