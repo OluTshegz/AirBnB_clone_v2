@@ -38,15 +38,12 @@ def do_deploy(archive_path):
 
     try:
         # Upload archive to temporary directory
-        with put(archive_path, f"/tmp/{file_name}") as result:
-            if not result.ok:
-                print(f"Failed to upload archive: {result.failed}")
-                return False
+        put(archive_path, f"/tmp/{file_name}")
 
-        # Extract archive
         # Create release directory
         run(f"""mkdir -p /data/web_static/releases/{folder_path}""")
 
+        # Extract archive to the release directory
         run(f"""tar -xzf /tmp/{file_name} -C {folder_path}""")
 
         # Clean up temporary archive
