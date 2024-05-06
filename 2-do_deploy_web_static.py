@@ -33,8 +33,6 @@ def do_deploy(archive_path):
 
     # Construct the folder path based on the folder name
     folder_path = "/data/web_static/releases/{}/".format(folder_name)
-    # Initialize the success flag to False
-    success = False
 
     try:
         # Upload archive to temporary directory
@@ -60,13 +58,11 @@ def do_deploy(archive_path):
         run("rm -rf /data/web_static/current")
 
         # Create new current link
-        run(f"ln -s {folder_path} /data/web_static/current")
+        run(f"ln -sf {folder_path} /data/web_static/current")
 
         print("New version deployed!")
-        success = True
+        return True
 
     except Exception as e:
         print(f"Error deploying archive: {e}")
-        success = False
-
-    return success
+        return False
