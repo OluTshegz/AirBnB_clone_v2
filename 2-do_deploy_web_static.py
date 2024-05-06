@@ -26,10 +26,11 @@ def do_deploy(archive_path):
     env.hosts = ['52.91.126.218', '54.89.178.237']
 
     # Upload archive to temporary directory on each server
-    with put(archive_path, "/tmp/") as result:
-        if not result.ok:
-            print(f"Failed to upload archive: {result.failed}")
-            return False
+    for server in env.hosts:
+        with put(archive_path, "/tmp/") as result:
+            if not result.ok:
+                print(f"Failed to upload archive: {result.failed}")
+                return False
 
     # Extract archive on each server
     for server in env.hosts:
@@ -42,7 +43,8 @@ def do_deploy(archive_path):
                 os.path.basename(archive_path).split('.')[0]}""")
 
     # Clean up temporary archive on each server
-    run("rm /tmp/*.tgz")
+    for server in env.hosts:
+        run("rm /tmp/*.tgz")
 
     # Update symbolic link and directories on each server
     for server in env.hosts:
