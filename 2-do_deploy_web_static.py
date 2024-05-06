@@ -2,7 +2,7 @@
 # a Fabric script (based on the file `1-pack_web_static.py`) that
 # distributes an archive to your web servers, using the function `do_deploy`
 
-from fabric.api import env, put, run, sudo
+from fabric.api import env, put, run
 # Import os for path manipulation (optional, depending on your implementation)
 import os
 
@@ -12,7 +12,7 @@ def do_deploy(archive_path):
     Deploys the provided archive to web servers.
 
     Args:
-        archive_path: Path to the archive file.
+        archive_path (str): Path to the archive file.
 
     Returns:
         bool: True if deployment is successful, False otherwise.
@@ -25,46 +25,45 @@ def do_deploy(archive_path):
     # Define web server IPs
     env.hosts = ['52.91.126.218', '54.89.178.237']
 
-    # Upload archive to temporary directory on each server
-    for server in env.hosts:
-        with put(archive_path, "/tmp/") as result:
+    file_name = os.path.basename(archive_path)
+    folder_name = file_name.replace(".tgz", "")
+    folder_path = "/data/web_static/releases/{}/".format(folder_name)
+    success = False
+
+    try:
+        # Upload archive to temporary directory
+        with put(archive_path, f"/tmp/{file_name}") as result:
             if not result.ok:
                 print(f"Failed to upload archive: {result.failed}")
                 return False
 
-    # Extract archive on each server
-    for server in env.hosts:
+        # Extract archive
         # Create release directory
-        run(f"""mkdir -p /data/web_static/releases/{
-            os.path.basename(archive_path).split('.')[0]}""")
+        run(f"""mkdir -p /data/web_static/releases/{folder_path}""")
 
-        run(f"""tar -xzf /tmp/{os.path.basename(archive_path)} -C
-            /data/web_static/releases/{
-                os.path.basename(archive_path).split('.')[0]}""")
+        run(f"""tar -xzf /tmp/{file_name} -C {folder_path}""")
 
-    # Clean up temporary archive on each server
-    for server in env.hosts:
-        run("rm /tmp/*.tgz")
+        # Clean up temporary archive
+        run(f"rm -rf /tmp/{file_name}")
 
-    # Update symbolic link and directories on each server
-    for server in env.hosts:
+        # Update symbolic link and directories
+        # Move content to release directory
+        run(f"mv {folder_path}web_static/* {folder_path}")
+
+        # Remove empty web_static directory
+        run(f"rm -rf {folder_path}web_static")
+
         # Delete old current link
         run("rm -rf /data/web_static/current")
 
-        # Move content to release directory
-        run("""mv /data/web_static/releases/{}/web_static/*
-            /data/web_static/releases/{}""".format(
-                os.path.basename(archive_path).split('.')[0],
-                os.path.basename(archive_path).split('.')[0]))
-
-        # Remove empty web_static directory
-        run("rm -rf /data/web_static/releases/{}/web_static".format(
-            os.path.basename(archive_path).split('.')[0]))
-
         # Create new current link
-        run("""ln -s /data/web_static/releases/{}
-            /data/web_static/current""".format(
-                os.path.basename(archive_path).split('.')[0]))
+        run(f"ln -s {folder_path} /data/web_static/current")
 
-    print("New version deployed!")
-    return True
+        print("New version deployed!")
+        success = True
+
+    except Exception as e:
+        print(f"Error deploying archive: {e}")
+        success = False
+
+    return success
