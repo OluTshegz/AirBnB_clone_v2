@@ -39,10 +39,10 @@ def do_deploy(archive_path):
         put(archive_path, f"/tmp/{file_name}")
 
         # Create release directory
-        run(f"""mkdir -p /data/web_static/releases/{folder_path}""")
+        run(f"mkdir -p /data/web_static/releases/{folder_path}")
 
         # Extract archive to the release directory
-        run(f"""tar -xzf /tmp/{file_name} -C {folder_path}""")
+        run(f"tar -xzf /tmp/{file_name} -C {folder_path}")
 
         # Clean up temporary archive
         run(f"rm -rf /tmp/{file_name}")
