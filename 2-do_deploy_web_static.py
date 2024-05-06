@@ -25,9 +25,15 @@ def do_deploy(archive_path):
     # Define web server IPs
     env.hosts = ['52.91.126.218', '54.89.178.237']
 
+    # Extract the file name and folder name from the archive path
+    # Extracts the file name from the path
     file_name = os.path.basename(archive_path)
+    # Removes the file extension to get the folder name
     folder_name = file_name.replace(".tgz", "")
+
+    # Construct the folder path based on the folder name
     folder_path = "/data/web_static/releases/{}/".format(folder_name)
+    # Initialize the success flag to False
     success = False
 
     try:
