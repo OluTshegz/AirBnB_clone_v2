@@ -5,7 +5,6 @@
 """This module contains do_clean() function"""
 
 
-import os
 from fabric.api import *
 
 
@@ -27,12 +26,12 @@ def do_clean(number=0):
     if number == 0:
         number = 1
 
-    local_archives = local("ls -t versions || true", capture=True).split()
+    local_archives = local("ls -t versions", capture=True).split()
     for archive in local_archives[number:]:
         local("rm -f versions/{}".format(archive))
 
-    remote_archives = run("ls -t /data/web_static/releases/ | grep web_stat*\
-                          || true")
+    remote_archives = run("ls -t /data/web_static/releases/ |\
+        grep web_static_*")
     remote_archives = remote_archives.split()
     for archive in remote_archives[number:]:
-        sudo("rm -rf /data/web_static/releases/{}".format(archive))
+        run("rm -rf /data/web_static/releases/{}".format(archive))

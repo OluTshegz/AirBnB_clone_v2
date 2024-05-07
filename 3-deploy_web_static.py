@@ -52,9 +52,6 @@ def do_deploy(archive_path):
         print(f"Error: Archive file {archive_path} does not exist.")
         return False
 
-    # Define web server IPs
-    env.hosts = ['52.91.126.218', '54.89.178.237']
-
     # Extract the file name and folder name from the archive path
     # Extracts the file name from the path
     file_name = os.path.basename(archive_path)
@@ -66,10 +63,10 @@ def do_deploy(archive_path):
 
     try:
         # Upload archive to temporary directory
-        put(archive_path, f"/tmp/{file_name}")
+        put(archive_path, "/tmp/")
 
         # Create release directory
-        run(f"mkdir -p /data/web_static/releases/{folder_path}")
+        run(f"mkdir -p {folder_path}")
 
         # Extract archive to the release directory
         run(f"tar -xzf /tmp/{file_name} -C {folder_path}")
@@ -114,6 +111,6 @@ def deploy():
 #     archive (static files) to the host/web servers."""
 #     archive_path = do_pack()
 #     if archive_path:
-#         return do_deploy(archive_path) 
+#         return do_deploy(archive_path)
 #     else:
 #         return False
