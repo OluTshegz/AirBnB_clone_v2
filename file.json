@@ -1,0 +1,74 @@
+{
+    "State.79317990-4c0a-4555-9641-fdc347302e39": {
+        "id": "79317990-4c0a-4555-9641-fdc347302e39",
+        "created_at": "2024-05-18T17:49:43.674440",
+        "updated_at": "2024-05-18T17:49:43.674514",
+        "name": "California",
+        "__class__": "State"
+    },
+    "State.d157af0f-6b8d-44da-b906-7a8af54de124": {
+        "id": "d157af0f-6b8d-44da-b906-7a8af54de124",
+        "created_at": "2024-05-18T17:49:43.681458",
+        "updated_at": "2024-05-18T17:49:43.681536",
+        "name": "Arizona",
+        "__class__": "State"
+    },
+    "Place.0289f163-80de-419d-9cf2-1602f66af479": {
+        "id": "0289f163-80de-419d-9cf2-1602f66af479",
+        "created_at": "2024-05-18T17:49:43.684078",
+        "updated_at": "2024-05-18T17:49:43.684169",
+        "city_id": "0001",
+        "user_id": "0001",
+        "name": "My little house",
+        "number_rooms": 4,
+        "number_bathrooms": 2,
+        "max_guest": 10,
+        "price_by_night": 300,
+        "latitude": 37.773972,
+        "longitude": -122.431297,
+        "__class__": "Place"
+    },
+    "State.b5f328db-851e-4a89-b8b9-386282b742b1": {
+        "id": "b5f328db-851e-4a89-b8b9-386282b742b1",
+        "created_at": "2024-05-18T22:42:02.720960",
+        "updated_at": "2024-05-18T22:42:02.721040",
+        "name": "California",
+        "__class__": "State"
+    },
+    "State.53f496c3-d0b0-4343-b041-ba7d99d982c7": {
+        "id": "53f496c3-d0b0-4343-b041-ba7d99d982c7",
+        "created_at": "2024-05-18T22:42:02.723921",
+        "updated_at": "2024-05-18T22:42:02.723991",
+        "name": "Arizona",
+        "__class__": "State"
+    },
+    "Place.449c2775-5392-4393-a30a-dc0907416fc6": {
+        "id": "449c2775-5392-4393-a30a-dc0907416fc6",
+        "created_at": "2024-05-18T22:42:03.042518",
+        "updated_at": "2024-05-18T22:42:03.042606",
+        "city_id": "0001",
+        "user_id": "0001",
+        "name": "My little house",
+        "number_rooms": 4,
+        "number_bathrooms": 2,
+        "max_guest": 10,
+        "price_by_night": 300,
+        "latitude": 37.773972,
+        "longitude": -122.431297,
+        "__class__": "Place"
+    },
+    "State.1f54d2a8-b90e-473f-95bf-b0808cd30eee": {
+        "id": "1f54d2a8-b90e-473f-95bf-b0808cd30eee",
+        "created_at": "2024-05-18T23:09:13.103632",
+        "updated_at": "2024-05-18T23:09:13.103659",
+        "name": "California",
+        "__class__": "State"
+    },
+    "State.72f324f3-d3dc-4af8-b14e-40a2a29f5660": {
+        "id": "72f324f3-d3dc-4af8-b14e-40a2a29f5660",
+        "created_at": "2024-05-18T23:09:13.128283",
+        "updated_at": "2024-05-18T23:09:13.128312",
+        "name": "Nevada",
+        "__class__": "State"
+    }
+}
