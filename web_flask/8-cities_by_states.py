@@ -10,12 +10,13 @@ from models.state import State
 app = Flask(__name__)
 
 
-@app.route("/states_list", strict_slashes=False)
-def list_of_states():
+@app.route("/cities_by_states", strict_slashes=False)
+def state_cities():
     """
     displays a HTML page that contains a list of states
     """
-    return render_template("8-cities_by_states.html", states=storage.all(State))
+    return render_template("8-cities_by_states.html",
+                           states=storage.all(State))
 
 
 @app.teardown_appcontext
